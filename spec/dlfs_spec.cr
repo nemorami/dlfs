@@ -34,6 +34,12 @@ describe Dlfs do
     end
   end
 
+  describe "cross_entropy_error" do
+    it cross_entropy_error([0,1,0,0], [0.1, 0.8, 0.1, 0.1]) do
+      cross_entropy_error([0,1,0,0], [0.1, 0.8, 0.1, 0.1]).should eq -Math.log(0.8)
+    end
+  end
+  
   describe "load_mnist" do
     it "read" do      
       x_train, t_train, x_test, t_test = load_mnist

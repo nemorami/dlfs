@@ -22,8 +22,7 @@ end
 def smap(x : T, & ) : T forall T  
   re = if x.is_a? Iterable
     x.map { |e| yield e }    
-  else
-    
+  else    
     yield x    
   end
   re.as(T)
@@ -63,6 +62,16 @@ def softmax(x : Iterable)
   exp_a = x.map {|x| Math.exp(x-c)}
   sum_exp_a = exp_a.sum
   exp_a.map{|x| x/sum_exp_a} 
+end
+
+def mean_squared_error(y : Iterable, t : Iterable) : Iterable
+  0.5 * (y.zip(t).map {|x, y| (x - y)**2}).sum
+end
+
+def cross_entropy_error(y : Iterable, t : Iterable) : Float64  
+  idx = y.find {|e| e != 0}
+  # NOTE: idx.try {-Math.log(t[idx])} doesn't work
+  if idx ; -Math.log(t[idx]) else 0_f64  end
 end
 
 # def sigmoid(x)
