@@ -1,0 +1,6 @@
+/docs/
+/dataset/
+/lib/
+/bin/
+/.shards/
+*.dwarf
