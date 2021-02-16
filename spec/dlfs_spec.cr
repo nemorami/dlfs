@@ -51,6 +51,21 @@ describe Dlfs do
       
     end
   end
+  describe "nemerical_diff" do
+    it "x**2+2" do
+      [2,-2].map { |x|
+        numerical_diff(x) { |x|
+          x**2 + 2
+        }.to_i
+      }.should eq [4, -4]      
+     
+    end
+  describe "nemorical_gradient(x, f)" do
+    x = [1,2]
+    nemorical_gradient(x) { |x|
+      x[0]**2 + x[1]**2
+    }
+  end
   it "works" do
     false.should eq(false)
   end

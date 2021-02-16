@@ -12,7 +12,7 @@ end
 class Array(T)
   def <=>(t : T) : Array
     self.map { |e| e <=> t }
-  end
+  end  
 end
 
 def step_function(x)
@@ -26,6 +26,22 @@ def smap(x : T, & ) : T forall T
     yield x    
   end
   re.as(T)
+end
+
+def numerical_diff(x, &)
+  h = 0.0001
+  (yield(x+h) - yield(x-h)) / (2*h)
+end
+
+def numerical_gradient(x, y &)
+  h = 0.0001
+  (0..(x.size)).each { |i|
+    x[i] = x[i] + h
+    (yield(*x) - yield(*x)) / (2*h)
+  }
+  x.map.with_index { |e, i|
+    yield 
+  }
 end
 
 # mnist데이터를 읽는다.
