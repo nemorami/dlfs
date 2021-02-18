@@ -19,31 +19,51 @@ def step_function(x)
   x <=> 0
 end
 
-def smap(x : T, & ) : T forall T  
-  re = if x.is_a? Iterable
-    x.map { |e| yield e }    
-  else    
-    yield x    
-  end
-  re.as(T)
+def smap(x, &)
+  yield x
 end
 
+def smap(x : Iterable, & ) 
+  x.map { |e| yield e }
+end
+
+# 블록으로 주어진 함수의 x에서 미분값을 구한다.
+#
+#
 def numerical_diff(x, &)
   h = 0.0001
-  (yield(x+h) - yield(x-h)) / (2*h)
+  smap(x) do |x|
+    (yield(x+h) - yield(x-h)) / (2*h)  
+  end  
 end
 
-def numerical_gradient(x, y &)
-  h = 0.0001
-  (0..(x.size)).each { |i|
-    x[i] = x[i] + h
-    (yield(*x) - yield(*x)) / (2*h)
-  }
-  x.map.with_index { |e, i|
-    yield 
-  }
+# 
+#
+# TODO: generic. to make The first argument 
+def numerical_gradient(x : Iterable, & : Array(Float64) -> _)
+  h = 0.0001 
+  xh = x
+  x.map_with_index do |e, i|
+    xh[i] += h
+    fxh1 = yield(xh)
+    xh[i] -= 2*h
+    fxh2 = yield(xh)
+    (fxh1 - fxh2) / (2*h)
+  end
+  
 end
 
+def gradient_descent(x : Iterable, lr=0.1, step_num=100, &block : Array(Float64) -> _)
+  step_num.times {
+    grad = numerical_gradient(x) do |x|
+      block.call(x)
+    end    
+    x = x.zip(grad).map do |x, y| 
+      x - lr * y
+    end    
+  }
+  x
+end
 # mnist데이터를 읽는다.
 # ```
 # ``` 

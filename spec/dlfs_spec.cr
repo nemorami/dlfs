@@ -53,19 +53,32 @@ describe Dlfs do
   end
   describe "nemerical_diff" do
     it "x**2+2" do
+      re = numerical_diff([2, -2]) do |x|
+        x**2 + 2
+      end
+      re.map(&.to_i).should eq [4, -4]
+
       [2,-2].map { |x|
         numerical_diff(x) { |x|
           x**2 + 2
         }.to_i
-      }.should eq [4, -4]      
-     
-    end
-  describe "nemorical_gradient(x, f)" do
-    x = [1,2]
-    nemorical_gradient(x) { |x|
-      x[0]**2 + x[1]**2
-    }
+      }.should eq [4, -4]    
+    end 
   end
+  describe "numerical_gradient(x, f)" do
+    it "run" do          
+      re = numerical_gradient([3.0, 4.0]) {|x| x[0]**2 + x[1]**2}
+      (re.map &.round.to_i).should eq [6, 8]
+    end
+  end
+  describe "gradient_descent" do
+    it "gradient_descent" do
+      puts gradient_descent([-3.0, 4.0]) { |x|
+        x[0]**2 + x[1]**2
+      }
+    end
+  end
+
   it "works" do
     false.should eq(false)
   end
