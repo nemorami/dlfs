@@ -107,6 +107,7 @@ end
 def cross_entropy_error(y : Iterable, t : Iterable) : Float64  
   idx = y.find {|e| e != 0}
   # NOTE: idx.try {-Math.log(t[idx])} doesn't work
+
   if idx ; -Math.log(t[idx]) else 0_f64  end
 end
 
@@ -121,6 +122,7 @@ end
 def relu(x)
   smap(x) { |x| Math.max(0, x) }
 end
+
 
 # def relu(x)
 #   if x.is_a? Iterable
