@@ -27,29 +27,28 @@ TODO: Write development instructions here
 - [nemorami](https://github.com/your-github-user) - creator and maintainer
 
 ## NOTE
-  num/src/grad/primitives/gate.cr 
+  ### num/src/grad/primitives/gate.cr 
    - abstract def cache(result : Num::Grad::Variable(T), *args : Num::Grad::Variable(T))
-  tensor/internal/random.cr
+  ### tensor/internal/random.cr
+
   ```
   require "alea"
 
 
-class Num::Rand
-class Num::Rand
-  class_getter generator = Alea::Random.new
-  class_getter generator = Alea::Random(Alea::XSR128).new
-  class_getter stdlib_generator = Random.new
-  class_getter stdlib_generator = Random.new
-
-
-  def self.set_seed(seed)
-  def self.set_seed(seed)
-    @@generator = Alea::Random.new(seed)
-    @@generator = Alea::Random(Alea::XSR128).new(seed)
-    @@stdlib_generator = Random.new(seed)
-    @@stdlib_generator = Random.new(seed)
+  
+  class Num::Rand
+    class_getter generator = Alea::Random.new
+    class_getter generator = Alea::Random(Alea::XSR128).new
+    class_getter stdlib_generator = Random.new
+    class_getter stdlib_generator = Random.new
+  
+    def self.set_seed(seed)
+      @@generator = Alea::Random.new(seed)
+      @@generator = Alea::Random(Alea::XSR128).new(seed)
+      @@stdlib_generator = Random.new(seed)
+      @@stdlib_generator = Random.new(seed)
+    end  
   end
-  end
-end
-end
-```
+  ```
+  ### num/src/tensor/tensor.cr
+   s, o = Indexable.range_to_index_and_count(arg, @shape[i]).not_nil!

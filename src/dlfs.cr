@@ -1,4 +1,4 @@
-require "num"
+require "matrix"
 
 
 
@@ -75,10 +75,10 @@ def load_mnist
       t            
     end
   }
-  x_train = Tensor.from_array(read_data.call("./dataset/train-images-idx3-ubyte", 16, 784))
-  t_train = Tensor.from_array(read_data.call("./dataset/t10k-images-idx3-ubyte", 16, 784)) 
-  x_test = Tensor.columns(read_data.call("./dataset/train-labels-idx1-ubyte", 8, 60000))
-  t_test = Tensor.columns(read_data.call("./dataset/t10k-labels-idx1-ubyte", 8, 10000))
+  x_train = Matrix.rows(read_data.call("./dataset/train-images-idx3-ubyte", 16, 784))
+  t_train = Matrix.rows(read_data.call("./dataset/t10k-images-idx3-ubyte", 16, 784)) 
+  x_test = Matrix.columns(read_data.call("./dataset/train-labels-idx1-ubyte", 8, 60000))
+  t_test = Matrix.columns(read_data.call("./dataset/t10k-labels-idx1-ubyte", 8, 10000))
   {x_train, t_train, x_test, t_test}
 end
 
@@ -131,13 +131,13 @@ end
 # end
 
 def init_network
-  network = Hash(String, Tensor(Float64)).new
-  network["w1"] = Tensor.from_array([[0.1, 0.3, 0.5], [0.2, 0.4, 0.6]])
-  network["b1"] = Tensor.from_array([[0.1, 0.2, 0.3]])
-  network["w2"] = Tensor.from_array([[0.1, 0.4], [0.2, 0.5], [0.3, 0.6]])
-  network["b2"] = Tensor.from_array([[0.1, 0.2]])
-  network["w3"] = Tensor.from_array([[0.1, 0.3], [0.2, 0.4]])
-  network["b3"] = Tensor.from_array([[0.1, 0.2]])
+  network = Hash(String, Matrix(Float64)).new
+  network["w1"] = Matrix.rows([[0.1, 0.3, 0.5], [0.2, 0.4, 0.6]])
+  network["b1"] = Matrix.rows([[0.1, 0.2, 0.3]])
+  network["w2"] = Matrix.rows([[0.1, 0.4], [0.2, 0.5], [0.3, 0.6]])
+  network["b2"] = Matrix.rows([[0.1, 0.2]])
+  network["w3"] = Matrix.rows([[0.1, 0.3], [0.2, 0.4]])
+  network["b3"] = Matrix.rows([[0.1, 0.2]])
   return network
 end
 
@@ -152,9 +152,6 @@ def forward(network, x)
   y = a3
 end
 
-x = Tensor.from_array([[1.0, 0.5]])
+x = Matrix.rows([[1.0, 0.5]])
 
-#y = forward(init_network(), x)
-
-
-#puts "tensor #{Tensor.from_array([[1,2],[5,2]]).astype(Float64)}"
+y = forward(init_network(), x)
