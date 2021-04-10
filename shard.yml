@@ -8,12 +8,9 @@ targets:
   dlfs:
     main: src/dlfs.cr
 
-crystal: 0.36.1
 
 license: MIT
 
 dependencies:
   num:
     github: crystal-data/num.cr
-  matrix:
-    github: Exilor/matrix
